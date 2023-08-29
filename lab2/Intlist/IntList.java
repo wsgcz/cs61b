@@ -95,12 +95,12 @@ public class IntList {
                 return null;
             }
             else {
-                p=new IntList(B.first,null);
+                A=new IntList(B.first,null);
                 B=B.rest;
                 while (B !=null){
-                    p.rest=new IntList(B.first,null);
+                    A.rest=new IntList(B.first,null);
                     B=B.rest;
-                    p=p.rest;
+                    A=A.rest;
                 }
                     return A;
             }

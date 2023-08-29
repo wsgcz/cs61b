@@ -90,21 +90,8 @@ public class IntList {
             p.rest = B;
             return A;
         }
-        else{
-            if (B==null){
-                return null;
-            }
-            else {
-                A=new IntList(B.first,null);
-                p=A;
-                B=B.rest;
-                while (B !=null){
-                    p.rest=new IntList(B.first,null);
-                    B=B.rest;
-                    p=p.rest;
-                }
-                return A;
-            }
+        else {
+            return B;
         }
     }
 

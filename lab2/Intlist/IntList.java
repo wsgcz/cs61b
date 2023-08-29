@@ -96,13 +96,14 @@ public class IntList {
             }
             else {
                 A=new IntList(B.first,null);
+                p=A;
                 B=B.rest;
                 while (B !=null){
-                    A.rest=new IntList(B.first,null);
+                    p.rest=new IntList(B.first,null);
                     B=B.rest;
-                    A=A.rest;
+                    p=p.rest;
                 }
-                    return A;
+                return A;
             }
         }
     }

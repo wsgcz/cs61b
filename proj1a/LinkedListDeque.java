@@ -12,46 +12,36 @@ public class LinkedListDeque<T> {
     private List stand;
     private int size;
     public LinkedListDeque() {
-        stand = new List(stand, null, stand);
+        stand = new List(null, null, null);
+        stand.pre = stand;
+        stand.next = stand;
         size = 0;
     }
-    private T Recursionhelp(List L, int n) {
+    private T recursion(List L, int n) {
         if (n == 0) {
             return L.content;
         } else {
-            return Recursionhelp(L.next, n - 1);
+            return recursion(L.next, n - 1);
         }
     }
     public T getRecursive(int index) {
-        return Recursionhelp(this.stand.next, index);
+        return recursion(this.stand.next, index);
     }
     public int size() {
         return size;
     }
     public void addFirst(T item) {
-        if (size == 0) {
-            stand.pre = new List(stand, item, stand);
-            stand.next = stand.pre;
-        } else {
-            stand.next = new List(stand, item, stand.next);
-        }
+        stand.next = new List(stand, item, stand.next);
+        stand.next.next.pre = stand.next;
         size += 1;
     }
     public void addLast(T item) {
-        if (size == 0) {
-            stand.pre = new List(stand, item, stand);
-            stand.next = stand.pre;
-        } else {
-            stand.pre = new List(stand.pre, item, stand);
-        }
+        stand.pre = new List(stand.pre, item, stand);
+        stand.pre.pre.next = stand.pre;
         size += 1;
     }
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return size==0;
     }
     public void printDeque() {
         List p = stand.next;

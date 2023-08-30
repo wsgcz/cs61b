@@ -55,11 +55,7 @@ public class ArrayDeque<T> {
         size += 1;
     }
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return size==0;
     }
     public int size() {
         return size;
@@ -71,7 +67,7 @@ public class ArrayDeque<T> {
                 System.out.print(" ");
             }
         } else {
-            for (int i = first; i<array.length; i++) {
+            for (int i = first; i < array.length; i++) {
                 System.out.print(array[i]);
                 System.out.print(" ");
             }
@@ -121,8 +117,7 @@ public class ArrayDeque<T> {
         if (first <= last) {
             return array[index + first];
         } else {
-            if (index < array.length - first)
-            {
+            if (index < array.length - first) {
                 return array[first + index];
             } else {
                 index = index - (array.length - first);

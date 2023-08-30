@@ -1,69 +1,63 @@
 public class ArrayDeque<T> {
     private int size;
-    int first;
+    private int first;
     private int last;
-    private T[] Array;
+    private T[] array;
 
     public ArrayDeque() {
         size = 0;
-        Array = (T []) new Object[8];
+        array = (T []) new Object[8];
         last = 0;
         first = 0;
     }
     public void addFirst(T item) {
         if (size == 0) {
-            Array[0] = item;
-        }
-        else {
-            if (Array.length == size) {
+            array[0] = item;
+        } else {
+            if (array.length == size) {
                 resize(size * 2);
             }
             if (first == 0) {
-                first = Array.length - 1;
-            }
-            else {
+                first = array.length - 1;
+            } else {
                 first = first - 1;
             }
-            Array[first] = item;
+            array[first] = item;
         }
         size += 1;
     }
     private void resize(int length) {
         T[] a = (T []) new Object[length];
         if (first <= last) {
-            System.arraycopy(Array, first, a, 0, size);
-        }
-        else {
-            System.arraycopy(Array, first, a, 0, Array.length - first);
-            System.arraycopy(Array, 0, a, Array.length - first, last + 1);
+            System.arraycopy(array, first, a, 0, size);
+        } else {
+            System.arraycopy(array, first, a, 0, array.length - first);
+            System.arraycopy(array, 0, a, array.length - first, last + 1);
         }
         first = 0;
         last = size - 1;
-        Array = a;
+        array = a;
     }
     public  void addLast(T item) {
         if (size == 0) {
-            Array[0] = item;
-        }
-        else {
-            if (Array.length == size) {
+            array[0] = item;
+        } else {
+            if (array.length == size) {
                 resize(2 * size);
             }
-            if (last == Array.length - 1) {
+            if (last == array.length - 1) {
                 last = 0;
-            }
-            else {
+            } else {
                 last = last + 1;
             }
-            Array[last] = item;
+            array[last] = item;
         }
         size += 1;
     }
     public boolean isEmpty() {
         if (size == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -73,17 +67,16 @@ public class ArrayDeque<T> {
     public void printDeque() {
         if (first <= last) {
             for (int i = first; i < size + first; i++) {
-                System.out.print(Array[i]);
+                System.out.print(array[i]);
                 System.out.print(" ");
             }
-        }
-        else {
-            for (int i = first; i<Array.length; i++) {
-                System.out.print(Array[i]);
+        } else {
+            for (int i = first; i<array.length; i++) {
+                System.out.print(array[i]);
                 System.out.print(" ");
             }
             for (int i = 0; i < last; i++) {
-                System.out.print(Array[i]);
+                System.out.print(array[i]);
                 System.out.print(" ");
             }
         }
@@ -92,35 +85,33 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (size-1 <= Array.length && Array.length >= 16){
-            resize(Array.length / 2);
+        if (size - 1 <= array.length && array.length >= 16) {
+            resize(array.length / 2);
         }
         T store;
-        store = Array[first];
-        Array[first] = null;
-        if (first == Array.length - 1) {
+        store = array[first];
+        array[first] = null;
+        if (first == array.length - 1) {
             first = 0;
-        }
-        else {
+        } else {
             first = first + 1;
         }
         size -= 1;
         return store;
     }
-    public T removeLast(){
+    public T removeLast() {
         if (size == 0) {
             return null;
         }
-        if (size-1 <= Array.length && Array.length >= 16) {
-            resize(Array.length/2);
+        if (size - 1 <= array.length && array.length >= 16) {
+            resize(array.length / 2);
         }
         T store;
-        store = Array[last];
-        Array[last] = null;
+        store = array[last];
+        array[last] = null;
         if (last == 0) {
-            last = Array.length - 1;
-        }
-        else {
+            last = array.length - 1;
+        } else {
             last = last - 1;
         }
         size -= 1;
@@ -128,16 +119,14 @@ public class ArrayDeque<T> {
     }
     public T get(int index) {
         if (first <= last) {
-            return Array[index + first];
-        }
-        else {
-            if (index < Array.length - first)
+            return array[index + first];
+        } else {
+            if (index < array.length - first)
             {
-                return Array[first + index];
-            }
-            else {
-                index = index - (Array.length - first);
-                return Array[index];
+                return array[first + index];
+            } else {
+                index = index - (array.length - first);
+                return array[index];
             }
         }
     }

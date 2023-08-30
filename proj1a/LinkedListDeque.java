@@ -18,8 +18,7 @@ public class LinkedListDeque<T> {
     private T Recursionhelp(List L, int n) {
         if (n == 0) {
             return L.content;
-        }
-        else {
+        } else {
             return Recursionhelp(L.next, n - 1);
         }
     }
@@ -33,19 +32,16 @@ public class LinkedListDeque<T> {
         if (size == 0) {
             stand.pre = new List(stand, item, stand);
             stand.next = stand.pre;
-        }
-        else {
+        } else {
             stand.next = new List(stand, item, stand.next);
         }
         size += 1;
     }
     public void addLast(T item) {
-        if (size == 0)
-        {
+        if (size == 0) {
             stand.pre = new List(stand, item, stand);
             stand.next = stand.pre;
-        }
-        else {
+        } else {
             stand.pre = new List(stand.pre, item, stand);
         }
         size += 1;
@@ -53,8 +49,7 @@ public class LinkedListDeque<T> {
     public boolean isEmpty() {
         if (size == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -70,8 +65,7 @@ public class LinkedListDeque<T> {
         T store;
         if (size == 0) {
             return null;
-        }
-        else {
+        } else {
             store = stand.next.content;
             stand.next = stand.next.next;
             if (size == 1) {
@@ -85,8 +79,7 @@ public class LinkedListDeque<T> {
         T store;
         if (size == 0) {
             return null;
-        }
-        else {
+        } else {
             store = stand.pre.content;
             stand.pre = stand.pre.pre;
             if (size == 1) {

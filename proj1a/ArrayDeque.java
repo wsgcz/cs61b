@@ -55,7 +55,7 @@ public class ArrayDeque<T> {
         size += 1;
     }
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
     public int size() {
         return size;
@@ -81,7 +81,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (size - 1 <= array.length && array.length >= 16) {
+        if (size - 1 <= (array.length / 4) && array.length >= 16) {
             resize(array.length / 2);
         }
         T store;
@@ -99,7 +99,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (size - 1 <= array.length && array.length >= 16) {
+        if (size - 1 <= (array.length / 4) && array.length >= 16) {
             resize(array.length / 2);
         }
         T store;

@@ -41,7 +41,7 @@ public class LinkedListDeque<T> {
         size += 1;
     }
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
     public void printDeque() {
         List p = stand.next;

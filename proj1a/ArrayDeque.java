@@ -87,10 +87,12 @@ public class ArrayDeque<T> {
         T store;
         store = array[first];
         array[first] = null;
-        if (first == array.length - 1) {
-            first = 0;
-        } else {
-            first = first + 1;
+        if (first != last) {
+            if (first == array.length - 1) {
+                first = 0;
+            } else {
+                first = first + 1;
+            }
         }
         size -= 1;
         return store;
@@ -105,10 +107,12 @@ public class ArrayDeque<T> {
         T store;
         store = array[last];
         array[last] = null;
-        if (last == 0) {
-            last = array.length - 1;
-        } else {
-            last = last - 1;
+        if (first != last) {
+            if (last == 0) {
+                last = array.length - 1;
+            } else {
+                last = last - 1;
+            }
         }
         size -= 1;
         return store;

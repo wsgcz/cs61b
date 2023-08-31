@@ -57,10 +57,8 @@ public class LinkedListDeque<T> {
             return null;
         } else {
             store = stand.next.content;
+            stand.next.next.pre = stand;
             stand.next = stand.next.next;
-            if (size == 1) {
-                stand.pre = stand;
-            }
             size -= 1;
         }
         return store;
@@ -71,18 +69,17 @@ public class LinkedListDeque<T> {
             return null;
         } else {
             store = stand.pre.content;
+            stand.pre.pre.next = stand;
             stand.pre = stand.pre.pre;
-            if (size == 1) {
-                stand.next = stand;
-            }
             size -= 1;
         }
         return store;
     }
     public T get(int index) {
-        List p = stand;
-        while (p.next != stand) {
+        List p = stand.next;
+        while (index != 0) {
             p = p.next;
+            index = index - 1;
         }
         return p.content;
     }

@@ -13,6 +13,8 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         if (size == 0) {
             array[0] = item;
+            first = 0;
+            last = 0;
         } else {
             if (array.length == size) {
                 resize(size * 2);
@@ -41,6 +43,8 @@ public class ArrayDeque<T> {
     public  void addLast(T item) {
         if (size == 0) {
             array[0] = item;
+            first = 0;
+            last = 0;
         } else {
             if (array.length == size) {
                 resize(2 * size);

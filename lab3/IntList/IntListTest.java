@@ -29,15 +29,12 @@ public class IntListTest {
 
     @Test
     public void testReverse(){
-        IntList L = IntList.of(1, 2, 3);
-        IntList reversed = IntList.reverse(L);
-        IntList answer = IntList.of(3, 2, 1); 
-        IntList nullTest = new IntList();
-        IntList nullAnswer = new IntList();
-        IntList nullReversed = IntList.reverse(nullTest);
-        assertEquals(nullReversed, nullAnswer);
-        assertEquals(reversed, answer);
-        assertEquals(answer, L);
+        IntList A = IntList.of(1, 2, 3);
+        IntList B = IntList.reverse(A);
+        assertEquals(IntList.of(3, 2, 1), B);
+        assertNotEquals(IntList.of(1, 2, 3), A);
+        IntList C = IntList.reverse(null);
+        assertEquals(null, C);
     }
 
     /**

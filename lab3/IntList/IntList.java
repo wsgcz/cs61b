@@ -98,8 +98,13 @@ public class IntList {
      * Reverse the content of the intlist
      */
     public static IntList reverse(IntList A) {
-        int[] tmp = new int[20];
-        return A;
+        if (A == null || A.rest == null) {
+            return A;
+        }
+        IntList reversed = reverse(A.rest);
+        A.rest.rest = A;
+        A.rest = null;
+        return reversed;
     }
     /**
      * Returns a list consisting of the elements of A followed by the

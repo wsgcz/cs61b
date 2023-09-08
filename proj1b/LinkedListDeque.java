@@ -1,4 +1,4 @@
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
     private class List {
         List pre;
         List next;
@@ -27,22 +27,27 @@ public class LinkedListDeque<T> {
     public T getRecursive(int index) {
         return recursion(this.stand.next, index);
     }
+    @Override
     public int size() {
         return size;
     }
+    @Override
     public void addFirst(T item) {
         stand.next = new List(stand, item, stand.next);
         stand.next.next.pre = stand.next;
         size += 1;
     }
+    @Override
     public void addLast(T item) {
         stand.pre = new List(stand.pre, item, stand);
         stand.pre.pre.next = stand.pre;
         size += 1;
     }
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
+    @Override
     public void printDeque() {
         List p = stand.next;
         while (p.next != stand) {
@@ -51,6 +56,7 @@ public class LinkedListDeque<T> {
             p = p.next;
         }
     }
+    @Override
     public  T removeFirst() {
         T store;
         if (size == 0) {
@@ -63,6 +69,7 @@ public class LinkedListDeque<T> {
         }
         return store;
     }
+    @Override
     public T removeLast() {
         T store;
         if (size == 0) {
@@ -75,6 +82,7 @@ public class LinkedListDeque<T> {
         }
         return store;
     }
+    @Override
     public T get(int index) {
         List p = stand.next;
         while (index != 0) {

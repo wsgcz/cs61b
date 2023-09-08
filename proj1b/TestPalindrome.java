@@ -33,14 +33,16 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("aaaaaab"));
     }
     @Test
-    public void tesnewtIsPalindrome(){
-        assertTrue(palindrome.isPalindrome(""));
-        assertTrue(palindrome.isPalindrome("a"));
-        assertTrue(palindrome.isPalindrome("nopm"));
-        assertTrue(palindrome.isPalindrome("racebbs"));
-        assertFalse(palindrome.isPalindrome("abba"));
-        assertFalse(palindrome.isPalindrome("cat"));
-        assertFalse(palindrome.isPalindrome("rancor"));
-        assertFalse(palindrome.isPalindrome("noon"));
+    public void testOneIsPalindrome(){
+        OffByOne cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("", cc));
+        assertTrue(palindrome.isPalindrome("a", cc));
+        assertTrue(palindrome.isPalindrome("racebbs", cc));
+        assertFalse(palindrome.isPalindrome("abba", cc));
+        assertFalse(palindrome.isPalindrome("aba", cc));
+        assertFalse(palindrome.isPalindrome("cat", cc));
+        assertFalse(palindrome.isPalindrome("rancor", cc));
+        assertFalse(palindrome.isPalindrome("noon", cc));
+        assertTrue(palindrome.isPalindrome("nopm", cc));
     }
 }

@@ -24,19 +24,19 @@ public class Palindrome {
         return recursionHelp(wordDeque);
     }
     private boolean newrecursionHelp(ArrayDeque<Character> wordDeque, CharacterComparator cc){
-        if (wordDeque.size() == 0 || wordDeque.size() == 1){
+        if (wordDeque.isEmpty() || wordDeque.size() == 1){
             return true;
         }
         char first = wordDeque.removeFirst();
         char last = wordDeque.removeLast();
-        if (cc.equalChars(first,last)) {
+        if (! cc.equalChars(first,last)) {
             return false;
         } else {
-            return recursionHelp(wordDeque);
+            return newrecursionHelp(wordDeque, cc);
         }
     }
     public boolean isPalindrome(String word, CharacterComparator cc) {
         ArrayDeque<Character> wordDeque = (ArrayDeque<Character>) wordToDeque(word);
-        return recursionHelp(wordDeque);
+        return newrecursionHelp(wordDeque, cc);
     }
 }

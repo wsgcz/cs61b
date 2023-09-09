@@ -23,7 +23,7 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindrome(){
+    public void testIsPalindrome() {
         assertTrue(palindrome.isPalindrome(""));
         assertTrue(palindrome.isPalindrome("noon"));
         assertTrue(palindrome.isPalindrome("racecar"));
@@ -33,7 +33,7 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("aaaaaab"));
     }
     @Test
-    public void testOneIsPalindrome(){
+    public void testOneIsPalindrome() {
         OffByOne cc = new OffByOne();
         assertTrue(palindrome.isPalindrome("", cc));
         assertTrue(palindrome.isPalindrome("a", cc));

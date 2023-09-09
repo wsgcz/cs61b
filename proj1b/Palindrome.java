@@ -7,8 +7,8 @@ public class Palindrome {
         }
         return wordDeque;
     }
-    private boolean recursionHelp(ArrayDeque<Character> wordDeque){
-        if (wordDeque.size() == 0 || wordDeque.size() == 1){
+    private boolean recursionHelp(ArrayDeque<Character> wordDeque) {
+        if (wordDeque.size() == 0 || wordDeque.size() == 1) {
             return true;
         }
         char first = wordDeque.removeFirst();
@@ -23,8 +23,8 @@ public class Palindrome {
         ArrayDeque<Character> wordDeque = (ArrayDeque<Character>) wordToDeque(word);
         return recursionHelp(wordDeque);
     }
-    private boolean newrecursionHelp(ArrayDeque<Character> wordDeque, CharacterComparator cc){
-        if (wordDeque.isEmpty() || wordDeque.size() == 1){
+    private boolean newrecursionHelp(ArrayDeque<Character> wordDeque, CharacterComparator cc) {
+        if (wordDeque.isEmpty() || wordDeque.size() == 1) {
             return true;
         }
         char first = wordDeque.removeFirst();

@@ -13,10 +13,11 @@ public class TestOffByOne {
         OffByOne obo = new OffByOne();
         assertTrue(obo.equalChars('a', 'b'));
         assertTrue(obo.equalChars('r', 'q'));
-        assertFalse(obo.equalChars('a', 'e'));
-        assertFalse(obo.equalChars('z', 'a'));
-        assertFalse(obo.equalChars('a', 'a'));
         assertTrue(obo.equalChars('&', '%'));
+
+        assertFalse(obo.equalChars('a', 'a'));
+        assertFalse(obo.equalChars('a', 'z'));
+        assertFalse(obo.equalChars('a', 'e'));
         assertFalse(obo.equalChars('a', 'A'));
     }
 }

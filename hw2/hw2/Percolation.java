@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import org.junit.Test;
 
 public class Percolation {
-    WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF uf;
     private final int number;
     private int openSize;
     private boolean isPercolation;
@@ -40,7 +40,7 @@ public class Percolation {
             res[1] = -1;
         }
         if (col + 1 < number) {
-            if (isOpen(row, col)) {
+            if (isOpen(row, col + 1)) {
                 res[2] = position(row, col + 1);
             } else {
                 res[2] = -1;
@@ -122,8 +122,10 @@ public class Percolation {
             toUnion = store;
         }
         uf.union(toUnion, nowpos);
-        while (index < 4 && myaround[index] >= 0) {
-            uf.union(toUnion, myaround[index]);
+        while (index < 4) {
+            if (myaround[index] >= 0) {
+                uf.union(toUnion, myaround[index]);
+            }
             index += 1;
         }
     }
@@ -144,8 +146,12 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         //is the site (row, col) full?
         isValid(row, col);
-        int pos = position(row, col);
-        return isTop(uf.find(pos));
+        if (! isOpen(row, col)) {
+            return false;
+        } else {
+            int pos = position(row, col);
+            return isTop(uf.find(pos));
+        }
     }
     public int numberOfOpenSites() {
         //number of open site

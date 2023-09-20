@@ -7,7 +7,8 @@ public class Percolation {
     private final WeightedQuickUnionUF uf;
     private final int number;
     private int openSize;
-    private boolean isPercolation;
+    private int top;
+    private int bottom;
     private int position(int row, int col) {
         return row * number + col;
     }
@@ -77,8 +78,9 @@ public class Percolation {
         }
         number = N;
         openSize = 0;
-        isPercolation = false;
-        uf = new WeightedQuickUnionUF(number * number);
+        uf = new WeightedQuickUnionUF(number * number + 2);
+        top = number * number;
+        bottom = number * number + 1;
         signal = new int[number][number];
         for (int i = 0; i < number; i+= 1) {
             for (int j = 0; j < number; j += 1) {
@@ -87,44 +89,18 @@ public class Percolation {
         }
     }
     private void openHelp(int row, int col) {
-        int nowpos = position(row, col);
-        int[] myaround = around(row, col);
-        boolean top = false;
-        boolean bottom = false;
+        int pos = position(row, col);
+        if (isTop(pos)) {
+            uf.union(pos, top);
+        }
+        if (isBottom(pos)) {
+            uf.union(pos, bottom);
+        }
         int index = 0;
-        int toUnion = nowpos;
-        int store = 0;
-        if (isTop(uf.find(nowpos))) {
-            top = true;
-        }
-        if (isBottom(uf.find(nowpos))) {
-            bottom = true;
-        }
-        while (index < 4) {
-            int get = myaround[index];
-            if (get >= 0) {
-                int find = uf.find(get);
-                if (isTop(find)) {
-                    top = true;
-                    toUnion = get;
-                    store = get;
-                }
-                if (isBottom(find)) {
-                    bottom = true;
-                    toUnion = get;
-                }
-            }
-            index += 1;
-        }
-        index = 0;
-        if (top && bottom) {
-            isPercolation = true;
-            toUnion = store;
-        }
-        uf.union(toUnion, nowpos);
+        int[] myaround = around(row, col);
         while (index < 4) {
             if (myaround[index] >= 0) {
-                uf.union(toUnion, myaround[index]);
+                uf.union(pos, myaround[index]);
             }
             index += 1;
         }
@@ -149,8 +125,7 @@ public class Percolation {
         if (! isOpen(row, col)) {
             return false;
         } else {
-            int pos = position(row, col);
-            return isTop(uf.find(pos));
+            return uf.connected(top, position(row, col));
         }
     }
     public int numberOfOpenSites() {
@@ -159,10 +134,9 @@ public class Percolation {
     }
     public boolean percolates() {
         //does the system percolate?
-        return isPercolation;
+        return uf.connected(top, bottom);
     }
     public static void main(String[] args) {
         //use for unit testing
-
     }
 }

@@ -16,14 +16,14 @@ public class PercolationStats {
         int count;
         time = T;
         number = N;
-        res = new double[N];
+        res = new double[time];
         for (int i = 0; i < time; i += 1) {
             Percolation pl = pf.make(N);
             count = 0;
             StdRandom.setSeed(i);
             while (! pl.percolates()) {
-                int row = (int) Math.round(StdRandom.uniform() * (N - 1));
-                int col = (int) Math.round(StdRandom.uniform() * (N - 1));
+                int row = (int) StdRandom.uniform() * N;
+                int col = (int) StdRandom.uniform() * N;
                 pl.open(row, col);
                 count += 1;
             }

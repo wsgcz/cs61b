@@ -19,15 +19,17 @@ public class PercolationStats {
         res = new double[time];
         for (int i = 0; i < time; i += 1) {
             Percolation pl = pf.make(N);
-            count = 0;
             StdRandom.setSeed(i);
+            int row;
+            int col;
             while (! pl.percolates()) {
-                int row = (int) StdRandom.uniform() * N;
-                int col = (int) StdRandom.uniform() * N;
+                do {
+                    row = StdRandom.uniform(N);
+                    col = StdRandom.uniform(N);
+                } while (pl.isOpen(row, col));
                 pl.open(row, col);
-                count += 1;
             }
-            res[i] = (double) count / (number * number);
+            res[i] = (double) pl.numberOfOpenSites() / (number * number);
         }
     }
 

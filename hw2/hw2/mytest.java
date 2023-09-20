@@ -50,15 +50,10 @@ public class mytest {
         int N = 5;
         int[] res = new int[50];
         for (int i = 0; i < 50; i+= 1) {
-            res[i] = (int) (StdRandom.uniform() * N);
+            res[i] =(StdRandom.uniform(N));
         }
         for (int i = 0; i < 50; i+= 1) {
             System.out.println(res[i]);
         }
-//        WeightedQuickUnionUF my = new WeightedQuickUnionUF(36);
-//        my.union(21, 21);
-//        my.union(15, 21);
-//        my.union(15, 9);
-//        System.out.println(my.find(9));
     }
 }

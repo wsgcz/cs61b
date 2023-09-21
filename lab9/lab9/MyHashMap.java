@@ -1,5 +1,6 @@
 package lab9;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     private static final int DEFAULT_SIZE = 16;
     private static final double MAX_LF = 0.75;
-
+    private static final int factor = 2;
     private ArrayMap<K, V>[] buckets;
     private int size;
 
@@ -25,7 +26,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         buckets = new ArrayMap[DEFAULT_SIZE];
         this.clear();
     }
-
+    public MyHashMap(int PASS_SIZE) {
+        buckets = new ArrayMap[PASS_SIZE];
+        this.clear();
+    }
     /* Removes all of the mappings from this map. */
     @Override
     public void clear() {
@@ -53,19 +57,33 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        return buckets[hash(key)].get(key);
     }
-
+    private void resize() {
+        MyHashMap<K, V> my = new MyHashMap<>(buckets.length * factor);
+        for (int i = 0; i < buckets.length; i += 1) {
+            for (K key : buckets[i]) {
+                my.put(key, buckets[i].get(key));
+            }
+        }
+        this.buckets = my.buckets;
+    }
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (loadFactor() >= MAX_LF) {
+            resize();
+        }
+        int pos = hash(key);
+        size -= buckets[pos].size;
+        buckets[pos].put(key, value);
+        size += buckets[pos].size;
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////

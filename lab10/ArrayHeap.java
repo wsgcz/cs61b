@@ -41,6 +41,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node that is the parent of the node at i.
      */
     private static int parentIndex(int i) {
+        if (i == 1) {
+            throw new IllegalArgumentException("root node has no parent");
+        }
         return i / 2;
     }
 
@@ -118,12 +121,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Bubbles down the node currently at the given index.
      */
     private void sink(int index) {
+        if (!inBounds(index)) {
+            return;
+        }
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
         int left = leftIndex(index);
         int right = rightIndex(index);
         int themin = min(left, right);
-        if (min(themin, index) != index) {
+        if (min(themin, index) == themin) {
             swap(index, themin);
             sink(themin);
         }
@@ -165,7 +171,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         T store = peek();
-        contents[1] = contents[size];
+        swap(1, size);
+        contents[size] = null;
         size -= 1;
         sink(1);
         return store;
@@ -190,11 +197,18 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        for (int i = 1; i <= size; i += 1) {
+        int i;
+        for (i = 1; i <= size; i += 1) {
             if (contents[i].item().equals(item)) {
                 contents[i].myPriority = priority;
+                break;
             }
         }
+        if (i == size + 1) {
+            throw new IllegalArgumentException("no such item in the heap");
+        }
+        swim(i);
+        sink(i);
     }
 
     /**

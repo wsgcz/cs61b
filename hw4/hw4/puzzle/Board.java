@@ -1,9 +1,9 @@
 package hw4.puzzle;
 
 import java.util.HashSet;
-import java.util.Set;
 
-public class Board implements WorldState{
+
+public class Board implements WorldState {
     /*
     Constructs a board from an N-by-N array of tiles where
     tiles[i][j] = tile at row i, column j
@@ -31,7 +31,7 @@ public class Board implements WorldState{
     Returns value of tile at row i, column j (or 0 if blank)
      */
     public int tileAt(int i, int j) {
-        if (! (i >= 0 && i < N && j >= 0 && j < N)) {
+        if (!(i >= 0 && i < N && j >= 0 && j < N)) {
             throw new IllegalArgumentException("i and j should be in the range of 0 and N");
         }
         return tiles[i][j];
@@ -50,7 +50,7 @@ public class Board implements WorldState{
                     sum += 1;
                 }
             }
-         }
+        }
         return sum - 1;
     }
     public int manhattan() {
@@ -73,6 +73,9 @@ public class Board implements WorldState{
     @Override
     public boolean equals(Object obj) {
         Board o = (Board) obj;
+        if (o.size() != size()) {
+            return false;
+        }
         for (int i = 0; i < N; i += 1) {
             for (int j = 0; j < N; j += 1) {
                 if (tiles[i][j] != o.tileAt(i, j)) {
@@ -107,12 +110,12 @@ public class Board implements WorldState{
             System.arraycopy(tiles[i], 0, tileToAddDown[i], 0, N);
             System.arraycopy(tiles[i], 0, tileToAddRight[i], 0, N);
         }
-        if (! (zeroCol == 0)) {
+        if (!(zeroCol == 0)) {
             tileToAddLeft[zeroRow][zeroCol - 1] = 0;
             tileToAddLeft[zeroRow][zeroCol] = tiles[zeroRow][zeroCol - 1];
             neighbors.add(new Board(tileToAddLeft));
         }
-        if (! (zeroRow == 0)) {
+        if (!(zeroRow == 0)) {
             tileToAddUp[zeroRow - 1][zeroCol] = 0;
             tileToAddUp[zeroRow][zeroCol] = tiles[zeroRow - 1][zeroCol];
             neighbors.add(new Board(tileToAddUp));
@@ -138,18 +141,15 @@ public class Board implements WorldState{
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
         s.append("\n");
         return s.toString();
     }
-    public static void main(String[] args) {
-        Board b = new Board(new int[][]{{1,2}, {3,0}});
-        Board newb = new Board(b.tiles.clone());
-        for (WorldState w : b.neighbors()) {
-            System.out.println(w);
-        }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

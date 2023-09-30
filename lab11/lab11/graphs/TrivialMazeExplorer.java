@@ -12,8 +12,10 @@ public class TrivialMazeExplorer extends MazeExplorer {
     /* Walks the entire maze, ignoring walls. */
     public void solve() {
         for (int i = 0; i < maze.V(); i += 1) {
-            distTo[i] = i;
-            marked[i] = true;
+            distTo[i] = i * 2;
+            if (i % 2 == 0) {
+                marked[i] = true;
+            }
             announce();
         }
     }

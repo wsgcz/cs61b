@@ -35,7 +35,14 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> queueOfQueues = new Queue<>();
+        Queue<Item> queueToAdd;
+        for (Item item : items) {
+             queueToAdd = new Queue<>();
+             queueToAdd.enqueue(item);
+             queueOfQueues.enqueue(queueToAdd);
+        }
+        return queueOfQueues;
     }
 
     /**
@@ -53,14 +60,41 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Item item;
+        Queue<Item> res = new Queue<>();
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            item = getMin(q1, q2);
+            res.enqueue(item);
+        }
+        return res;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        Queue<Queue<Item>> myqueue = MergeSort.makeSingleItemQueues(items);
+        Queue<Item> q1;
+        Queue<Item> q2;
+        while (myqueue.size() > 1) {
+            q1 = myqueue.dequeue();
+            q2 = myqueue.dequeue();
+            myqueue.enqueue(MergeSort.mergeSortedQueues(q1, q2));
+        }
+        return myqueue.dequeue();
+    }
+    public static <Item extends Comparable> void main(String[] args) {
+        Queue<String> students = new Queue<String>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        students.enqueue("Gcz");
+        students.enqueue("Liuxusen");
+        students.enqueue("WPJ");
+        students.enqueue("YJ");
+        students.enqueue("Zenziying");
+        System.out.println(students);
+        Queue<String> sortedStudents =  MergeSort.mergeSort(students);
+        System.out.println(students);
+        System.out.println(sortedStudents);
     }
 }

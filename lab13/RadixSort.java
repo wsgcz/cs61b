@@ -1,3 +1,6 @@
+import java.awt.*;
+import java.util.Arrays;
+
 /**
  * Class for doing Radix sort
  *
@@ -15,9 +18,25 @@ public class RadixSort {
      *
      * @return String[] the sorted array
      */
+    /*
+    there are many question :
+    1.how to know the longest string in the array
+    2.sort single word
+     */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
-        return null;
+        String[] res = new String[asciis.length];
+        int Length;
+        Length = 0;
+        for (int i = 0; i < asciis.length; i += 1) {
+            if (asciis[i].length() > Length) {
+                Length = asciis[i].length();
+            }
+            res[i] = asciis[i];
+        }
+        for (int i = 1; i <= Length; i += 1) {
+            sortHelperLSD(res, Length - i);
+        }
+        return res;
     }
 
     /**
@@ -27,8 +46,39 @@ public class RadixSort {
      * @param index The position to sort the Strings on.
      */
     private static void sortHelperLSD(String[] asciis, int index) {
-        // Optional LSD helper method for required LSD radix sort
-        return;
+        String[] tmp = new String[asciis.length];
+        int[] count = new int[257];
+        for (int i = 0; i < asciis.length; i += 1) {
+            if (asciis[i].length() < index + 1) {
+                count[0] += 1;
+            } else {
+                count[asciis[i].charAt(index) + 1] += 1;
+            }
+        }
+        int sum = 0;
+        int[] pos = new int[257];
+        for (int i = 0; i < 257; i += 1) {
+            pos[i] = sum;
+            sum += count[i];
+        }
+        for (int i = 0; i < asciis.length; i += 1) {
+            String item = asciis[i];
+            int position;
+            if (item.length() < index + 1) {
+                position = pos[0];
+            } else {
+                position = pos[item.charAt(index) + 1];
+            }
+            tmp[position] = item;
+            if (item.length() < index + 1) {
+                pos[0] += 1;
+            } else {
+                pos[item.charAt(index) + 1] += 1;
+            }
+        }
+        for (int i = 0; i < asciis.length; i += 1) {
+            asciis[i] = tmp[i];
+        }
     }
 
     /**
@@ -44,5 +94,11 @@ public class RadixSort {
     private static void sortHelperMSD(String[] asciis, int start, int end, int index) {
         // Optional MSD helper method for optional MSD radix sort
         return;
+    }
+    public static void main(String[] args) {
+        String[] strings = new String[]{"bad", "full", "jak", "happy", "doyou", "ne", "alone", "all", "the", "time"};
+        System.out.println(Arrays.toString(strings));
+        String[] sorted = sort(strings);
+        System.out.println(Arrays.toString(sorted));
     }
 }

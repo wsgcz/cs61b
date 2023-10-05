@@ -18,8 +18,7 @@ public class HuffmanEncoder {
         return frequencyTable;
     }
     public static void main(String[] args) {
-        //String filename = args[0];
-        String filename = "tas.txt";
+        String filename = args[0];
         List<BitSequence> bitSequences = new ArrayList<>();
         char[] inputSymbols = FileUtils.readFile(filename);
         int numberOfSymbol = inputSymbols.length;

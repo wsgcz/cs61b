@@ -1,9 +1,7 @@
 public class HuffmanDecoder {
     public static void main(String[] args) {
-        //String filename = args[0];
-        //String outfile = args[1];
-        String filename = "tas.txt.huf";
-        String outfile = "myres";
+        String filename = args[0];
+        String outfile = args[1];
         Match match;
         int i = 0;
         ObjectReader or = new ObjectReader(filename);

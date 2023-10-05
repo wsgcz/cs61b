@@ -4,12 +4,13 @@ import java.awt.image.LookupTable;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class BinaryTrie implements Serializable {
     Map<Character, BitSequence> lookupTable;
-    MinPQ<Node> pq;
+    PriorityQueue<Node> priorityQueue;
     Node root;
-    private class Node implements Comparable<Node>{
+    private class Node implements Comparable<Node>, Serializable{
 
         boolean isChar;
         int weight;
@@ -31,20 +32,20 @@ public class BinaryTrie implements Serializable {
     }
     public BinaryTrie(Map<Character, Integer> frequencyTable) {
         lookupTable = new HashMap<>();
-        pq = new MinPQ<>();
+        priorityQueue = new PriorityQueue<>();
         Node left;
         Node right;
         root = new Node(false, null, null, null, 0);
         for (Character c : frequencyTable.keySet()) {
-            pq.insert(new Node(true, null, null, c, frequencyTable.get(c)));
+            priorityQueue.add(new Node(true, null, null, c, frequencyTable.get(c)));
         }
-        while (pq.size() > 2) {
-            left = pq.delMin();
-            right = pq.delMin();
-            pq.insert(new Node(false, left, right, null, left.weight + right.weight));
+        while (priorityQueue.size() > 2) {
+            left = priorityQueue.poll();
+            right = priorityQueue.poll();
+            priorityQueue.add(new Node(false, left, right, null, left.weight + right.weight));
         }
-        root.next[0] = pq.delMin();
-        root.next[1] = pq.delMin();
+        root.next[0] = priorityQueue.poll();
+        root.next[1] = priorityQueue.poll();
     }
     public Match longestPrefixMatch(BitSequence querySequence) {
         Node n = root;

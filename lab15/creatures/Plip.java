@@ -7,6 +7,8 @@ import huglife.HugLifeUtils;
 import java.awt.Color;
 import java.util.Map;
 import java.util.List;
+import java.util.Random;
+import edu.princeton.cs.introcs.StdRandom;
 
 /** An implementation of a motile pacifist photosynthesizer.
  *  @author Josh Hug
@@ -19,6 +21,7 @@ public class Plip extends Creature {
     private int g;
     /** blue color. */
     private int b;
+    private final int MAXENERGY = 2;
 
     /** creates plip with energy equal to E. */
     public Plip(double e) {
@@ -42,7 +45,9 @@ public class Plip extends Creature {
      *  that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+        g = (int) (96 * energy) + 63;
         return color(r, g, b);
     }
 
@@ -55,11 +60,17 @@ public class Plip extends Creature {
      *  private static final variable. This is not required for this lab.
      */
     public void move() {
+        energy -= 0.15;
     }
 
 
     /** Plips gain 0.2 energy when staying due to photosynthesis. */
     public void stay() {
+        energy += 0.2;
+        if (energy > MAXENERGY) {
+            energy = MAXENERGY;
+        }
+
     }
 
     /** Plips and their offspring each get 50% of the energy, with none
@@ -67,7 +78,8 @@ public class Plip extends Creature {
      *  Plip.
      */
     public Plip replicate() {
-        return this;
+        energy = energy / 2;
+        return new Plip(energy);
     }
 
     /** Plips take exactly the following actions based on NEIGHBORS:
@@ -81,7 +93,32 @@ public class Plip extends Creature {
      *  for an example to follow.
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
+        List<Direction> empties = getNeighborsOfType(neighbors, "empty");
+        int numberOfEmpties = empties.size();
+        if (numberOfEmpties == 0) {
+            return new Action(Action.ActionType.STAY);
+        } else {
+            if (energy > 1) {
+                Direction repDir = empties.get(0);
+                return  new Action(Action.ActionType.REPLICATE, repDir);
+            } else {
+                List<Direction> clorus = getNeighborsOfType(neighbors, "clorus");
+                if (!clorus.isEmpty()) {
+                    int x = StdRandom.uniform(2);
+                    if (x == 1) {
+                        int y = StdRandom.uniform(numberOfEmpties);
+                        Direction moveDir = empties.get(y);
+                        return new Action(Action.ActionType.MOVE, moveDir);
+                    }
+                }
+            }
+        }
         return new Action(Action.ActionType.STAY);
     }
-
+//    public static void main(String[] args) {
+//        for (int i = 0; i < 30; i += 1) {
+//            int y = StdRandom.uniform(2);
+//            System.out.println(y);
+//        }
+//    }
 }

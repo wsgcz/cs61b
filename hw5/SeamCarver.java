@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class SeamCarver {
     private Picture picture;
-    int width;
-    int height;
+    private int width;
+    private int height;
     private double[][] energy;
     private boolean checkInBound(int x, int y) {
         return x >= 0 && x <= width - 1 && y >= 0 && y <= height - 1;
@@ -39,7 +39,7 @@ public class SeamCarver {
     }
 
     public Picture picture() {
-        return picture;
+        return new Picture(picture);
     }
     public int width() {
         return width;
@@ -81,10 +81,27 @@ public class SeamCarver {
         }
         return res;
     }
+    private int findminindex(double[] arr) {
+        double min = arr[0];
+        int index = 0;
+        for (int i = 1; i < arr.length; i += 1) {
+            if (arr[i] < min) {
+                min = arr[i];
+                index = i;
+            }
+        }
+        return index;
+    }
     private int[] findVerticalSeamHelp(double[][] energy) {
         int height = energy.length;
         int width = energy[0].length;
         int[] seam = new int[height];
+        if (height == 1) {
+            return new int[]{findminindex(energy[0])};
+        }
+        if (width == 1) {
+            return seam;
+        }
         M = new double[height][width];
         for (int i = 0; i < height; i += 1) {
             for (int j = 0; j < width; j += 1) {
@@ -102,14 +119,7 @@ public class SeamCarver {
             }
         }
         //System.out.println(Arrays.deepToString(M));
-        double min = M[height - 1][0];
-        int col = 0;
-        for (int i = 1; i < width; i += 1) {
-            if (M[height - 1][i] < min) {
-                min = M[height - 1][i];
-                col = i;
-            }
-        }
+        int col = findminindex(M[height - 1]);
         int signal = seam.length - 1;
         seam[signal] = col;
         while (signal > 0) {

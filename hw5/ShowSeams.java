@@ -31,6 +31,7 @@ public class ShowSeams {
 
     public static void main(String[] args) {
         Picture picture = new Picture(args[0]);
+        //Picture picture = new Picture("images/3x4.png");
         StdOut.printf("%d-by-%d image\n", picture.width(), picture.height());
         picture.show();        
         SeamCarver sc = new SeamCarver(picture);

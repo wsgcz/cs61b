@@ -94,6 +94,15 @@ public class Boggle {
             }
             return res;
         }
+        @Override
+        public boolean equals(Object o) {
+            CharPos other = (CharPos) o;
+            return other.c == c && other.y == y && other.x == x;
+        }
+        @Override
+        public int hashCode() {
+            return y * 611 * 611 + x * 611;
+        }
     }
     private static final Node root = new Node(false);
     private static void addWord(String s) {
@@ -112,25 +121,22 @@ public class Boggle {
             }
         }
     }
-    private static void lookaround(String s, CharPos charPos ,boolean[][] checked, Node node) {
+    private static void lookaround(String s, CharPos charPos ,Set<CharPos> charPosSet, Node node) {
+        char c = charPos.c;
         int x = charPos.x;
         int y = charPos.y;
-        char c = charPos.c;
         Node n = node;
-        if (!checked[x][y]) {
+        if (!charPosSet.contains(charPos)) {
             if (n.next.containsKey(c)) {
-                boolean[][] ck = new boolean[row][col];
-                for (int i = 0; i < row; i += 1) {
-                    if (col >= 0) System.arraycopy(checked[i], 0, ck[i], 0, col);
-                }
-                ck[x][y] = true;
+                Set<CharPos> cps = new HashSet<>(charPosSet);
+                cps.add(new CharPos(c, x, y));
                 n = n.next.get(c);
                 s = s.concat(String.valueOf(c));
                 if (n.isChar) {
                     insertPq(s);
                 }
                 for (CharPos charPos1 : charPos.getNeighbor()) {
-                    lookaround(s, charPos1, ck, n);
+                    lookaround(s, charPos1, cps, n);
                 }
             }
         }
@@ -181,7 +187,8 @@ public class Boggle {
                 boolean[][] checked = new boolean[row][col];
                 CharPos cp = boggle[i][j];
                 String s = "";
-                lookaround(s, cp, checked, root);
+                Set<CharPos> charPosSet = new HashSet<>();
+                lookaround(s, cp, charPosSet, root);
             }
         }
 

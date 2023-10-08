@@ -16,7 +16,7 @@ public class Boggle {
     private static CharPos[][] boggle;
     private static Set<String> insertedStr;
     private static void insertPq(String s) {
-        if (insertedStr.contains(s)) {
+        if (insertedStr.contains(s) || s.length() <= 3) {
             return;
         }
         mystr str = new mystr(s);

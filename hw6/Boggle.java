@@ -157,8 +157,8 @@ public class Boggle {
         }
 
         In inBoard = new In(boardFilePath);
-        int row = 0;
-        int col = 0;
+        int row;
+        int col;
         String[] read = inBoard.readAllLines();
         row = read.length;
         col = read[0].length();
@@ -180,8 +180,6 @@ public class Boggle {
             for (int j = 0; j < col; j += 1) {
                 boolean[][] checked = new boolean[row][col];
                 CharPos cp = boggle[i][j];
-                char c = cp.c;
-                Node node = root;
                 String s = "";
                 lookaround(s, cp, checked, root);
             }

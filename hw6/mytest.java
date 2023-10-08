@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.In;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class mytest {
     static String dictPath = "words.txt";
@@ -8,23 +9,25 @@ public class mytest {
         checked[1][1] = true;
     }
     public static void main(String[] args) {
-        String boardFilePath = "exampleBoard.txt";
-        In inBoard = new In(boardFilePath);
-        int row = 0;
-        int col = 0;
-        while (!inBoard.isEmpty()) {
-            col = inBoard.readString().length();
-            row += 1;
-        }
-        inBoard = new In(boardFilePath);
-        for (int i = 0; i < row; i += 1) {
-            for (int j = 0; j <= col; j += 1) {
-                char c = inBoard.readChar();
-                if (c != 13 && c != 10) {
-                    System.out.println(c);
-                }
-            }
-        }
-
+        String boardFilePath = "exampleBoard2.txt";
+        List<String> res = Boggle.solve(7, "exampleBoard.txt");
+        System.out.println(res);
+//        In inBoard = new In(boardFilePath);
+//        int row = 0;
+//        int col = 0;
+//        while (!inBoard.isEmpty()) {
+//            int length;
+//            length = inBoard.readString().length();
+//            if (row == 0) {
+//                col = length;
+//            } else {
+//                if (length != col) {
+//                    throw new IllegalArgumentException("thhe input board should be rectangular");
+//                }
+//            }
+//            row += 1;
+//        }
+//        Boggle.row = row;
+//        Boggle.col = col;
     }
 }

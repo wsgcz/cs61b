@@ -8,20 +8,45 @@ public class Boggle {
     
     // File path of dictionary file
     static String dictPath = "words.txt";
-    private static final MinPQ<String> pq = new MinPQ<>();
+    private static final MinPQ<mystr> pq = new MinPQ<>();
     private static int k;
     private static int row;
     private static int col;
     //private static String
     private static CharPos[][] boggle;
+    private static Set<String> insertedStr;
     private static void insertPq(String s) {
+        if (insertedStr.contains(s)) {
+            return;
+        }
+        mystr str = new mystr(s);
         if (pq.size() >= k) {
-            if (pq.min().compareTo(s) < 0) {
+            if (pq.min().compareTo(str) < 0) {
                 pq.delMin();
-                pq.insert(s);
+                pq.insert(str);
             }
         } else {
-            pq.insert(s);
+            pq.insert(str);
+        }
+        insertedStr.add(s);
+    }
+    private static class mystr implements Comparable<mystr>{
+        String string;
+        void addChar(char c) {
+            string = string.concat(String.valueOf(c));
+        }
+        mystr(String s) {
+            string = s;
+        }
+        @Override
+        public int compareTo(mystr o) {
+            if (this.string.length() > o.string.length()) {
+                return 1;
+            }
+            if (this.string.length() < o.string.length()) {
+                return -1;
+            }
+            return o.string.compareTo(this.string);
         }
     }
     private static class Node {
@@ -125,6 +150,7 @@ public class Boggle {
             throw new IllegalArgumentException("k should be non-positive");
         }
         Boggle.k = k;
+        insertedStr = new HashSet<>();
         In inWord = new In(dictPath);
         while (!inWord.isEmpty()) {
             addWord(inWord.readString());
@@ -148,15 +174,18 @@ public class Boggle {
         Boggle.row = row;
         Boggle.col = col;
         boggle = new CharPos[row][col];
+        char[][] tmp = new char[row][col];
         inBoard = new In(boardFilePath);
         for (int i = 0; i < row; i += 1) {
-            for (int j = 0; j <= col; j += 1) {
+            for (int j = 0; j <= col + 1; j += 1) {
                 char c = inBoard.readChar();
-                if (c != 10 && c != 13) {
-                    boggle[i][j] = new CharPos(inBoard.readChar(), i, j);
+                if (j < col) {
+                    boggle[i][j] = new CharPos(c, i, j);
+                    tmp[i][j] = c;
                 }
             }
         }
+        System.out.println(Arrays.deepToString(tmp));
 
         for (int i = 0; i < row; i += 1) {
             for (int j = 0; j < col; j += 1) {
@@ -171,7 +200,7 @@ public class Boggle {
 
         List<String> res = new ArrayList<>();
         while (!pq.isEmpty()) {
-            res.add(pq.delMin());
+            res.add(pq.delMin().string);
         }
         Collections.reverse(res);
         return res;

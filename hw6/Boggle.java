@@ -159,33 +159,22 @@ public class Boggle {
         In inBoard = new In(boardFilePath);
         int row = 0;
         int col = 0;
-        while (!inBoard.isEmpty()) {
-            int length;
-            length = inBoard.readString().length();
-            if (row == 0) {
-                col = length;
-            } else {
-                if (length != col) {
-                    throw new IllegalArgumentException("thhe input board should be rectangular");
-                }
+        String[] read = inBoard.readAllLines();
+        row = read.length;
+        col = read[0].length();
+        for (int i = 1; i < row; i += 1) {
+            if (read[i].length() != col) {
+                throw new IllegalArgumentException("the input board should be rectangular");
             }
-            row += 1;
         }
         Boggle.row = row;
         Boggle.col = col;
         boggle = new CharPos[row][col];
-        char[][] tmp = new char[row][col];
-        inBoard = new In(boardFilePath);
         for (int i = 0; i < row; i += 1) {
-            for (int j = 0; j <= col + 1; j += 1) {
-                char c = inBoard.readChar();
-                if (j < col) {
-                    boggle[i][j] = new CharPos(c, i, j);
-                    tmp[i][j] = c;
-                }
+            for (int j = 0; j < col ; j += 1) {
+                boggle[i][j] = new CharPos(read[i].charAt(j), i, j);
             }
         }
-        System.out.println(Arrays.deepToString(tmp));
 
         for (int i = 0; i < row; i += 1) {
             for (int j = 0; j < col; j += 1) {
